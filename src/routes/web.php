@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserGroupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,17 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     Route::controller(UserGroupController::class)->prefix('user-groups')->group(function () {
         Route::get('', 'index');
         Route::get('add', 'edit');
+        Route::post('add', 'save');
+        Route::get('edit/{id}', 'edit');
+        Route::post('save', 'save');
+        Route::get('delete/{id}', 'delete');
+    });
+
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::get('profile', 'profile');
+        Route::post('update-profile', 'updateProfile');
+        
+        Route::get('', 'index');
         Route::post('add', 'save');
         Route::get('edit/{id}', 'edit');
         Route::post('save', 'save');
