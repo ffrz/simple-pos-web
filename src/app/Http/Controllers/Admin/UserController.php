@@ -102,9 +102,8 @@ class UserController extends Controller
         }
 
         $validator = Validator::make($request->all(), $rules, [
-            'name.required' => 'Nama grup harus diisi.',
-            'name.unique' => 'Nama grup sudah digunakan.',
-            'name.max' => 'Nama grup terlalu panjang, maksimal 100 karakter.',
+            'name.required' => 'Nama harus diisi.',
+            'name.max' => 'Nama terlalu panjang, maksimal 100 karakter.',
             'password.sometimes' => 'Kata sandi kadang-kadang.',
             'password.min' => 'Kata sandi terlalu pendek, minimal 5 karakter.',
             'password.max' => 'Kata sandi terlalu panjang, maksimal 40 karakter.',
