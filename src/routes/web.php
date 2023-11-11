@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/// Tambahkan route untuk akses publik disini
 Route::get('/', function () {
-    return view('welcome');
+    // $user = Auth::user();
+    // if (!$user) {
+    //     return redirect(url('login'));
+    // }
+
+    // if ($user->role_id == 1) {
+    //     return redirect(url('dashboard'));
+    // } else if ($user->role_id == 2) {
+    //     return redirect(url('profile'));
+    // }
+});
+
+Route::get('admin/logout', [AuthController::class, 'logout']);
+
+/// Tambahkan route untuk akses admin disini
+Route::middleware('only_guest')->group(function () {
+    Route::get('admin/login', [AuthController::class, 'login'])->name('login');
+    Route::post('admin/login', [AuthController::class, 'authenticate']);
+});
+
+Route::middleware(['auth', 'only_admin'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index']);
+
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::get('', 'index');
+        Route::get('add', 'edit');
+        Route::post('add', 'save');
+        Route::get('edit/{id}', 'edit');
+        Route::post('save/{id}', 'save');
+        Route::get('delete/{id}', 'delete');
+        Route::post('delete/{id}', 'destroy');
+        Route::get('detail/{id}', 'detail');
+    });
 });
