@@ -16,9 +16,9 @@ class OnlyClient
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role_id == 1) {
-            return redirect('dashboard');
-        }
+        // if (Auth::user()->role_id == 1) {
+        //     return redirect('dashboard');
+        // }
         return $next($request);
     }
 }

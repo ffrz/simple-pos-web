@@ -18,11 +18,11 @@
         <div>
           <span>Masuk <b>{{ env('APP_NAME') }}</b><sup><small> v{{ env('APP_VERSION_STR') }}</sup></small></span>
         </div>
-        <div class="h1"><b>{{ $data['store_name'] }}</b></div>
+        <div class="h1"><b>{{ App\Models\Setting::value('app.store_name', 'TokoKu') }}</b></div>
       </div>
       <div class="card-body">
-        @if (\Session::has('error'))
-          <p class="login-box-msg text-danger">{{ \Session::get('error') }}</p>
+        @if (Session::has('error'))
+          <p class="login-box-msg text-danger">{{ Session::get('error') }}</p>
         @else
           <p class="login-box-msg">Masuk untuk memulai sesi anda.</p>
         @endif

@@ -16,9 +16,9 @@ class OnlyAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role_id == 2) {
-            return redirect('books');
-        }
+        // if (Auth::user()->role_id == 2) {
+        //     return redirect('books');
+        // }
         return $next($request);
     }
 }

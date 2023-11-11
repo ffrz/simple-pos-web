@@ -19,5 +19,6 @@ class UserGroup extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'description',
     ];
 }

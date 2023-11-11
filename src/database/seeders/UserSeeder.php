@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         User::insert([
             'username' => 'owner',
             'password' => Hash::make('12345'),
-            'active' => true,
+            'active' => false,
             'group_id' => 11,
         ]);
         User::insert([
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
         User::insert([
             'username' => 'kasir',
             'password' => Hash::make('12345'),
-            'active' => true,
+            'active' => false,
             'group_id' => 13,
         ]);
     }

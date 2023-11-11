@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserGroupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,16 +20,21 @@ use Illuminate\Support\Facades\Route;
 
 /// Tambahkan route untuk akses publik disini
 Route::get('/', function () {
-    // $user = Auth::user();
-    // if (!$user) {
-    //     return redirect(url('login'));
-    // }
+    $user = Auth::user();
+    if (!$user) {
+        return redirect(url('/admin/login'));
+    }
 
     // if ($user->role_id == 1) {
     //     return redirect(url('dashboard'));
     // } else if ($user->role_id == 2) {
     //     return redirect(url('profile'));
     // }
+    return redirect(url('/admin/dashboard'));
+});
+
+Route::get('/admin', function () {
+    return redirect(url('/admin/dashboard'));
 });
 
 Route::get('admin/logout', [AuthController::class, 'logout']);
@@ -37,17 +45,21 @@ Route::middleware('only_guest')->group(function () {
     Route::post('admin/login', [AuthController::class, 'authenticate']);
 });
 
-Route::middleware(['auth', 'only_admin'])->group(function () {
+Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);
+    
+    Route::controller(SettingController::class)->prefix('settings')->group(function () {
+        Route::get('', 'edit');
+        Route::post('save', 'save');
+    });
 
-    Route::controller(UserController::class)->prefix('users')->group(function () {
+    Route::controller(UserGroupController::class)->prefix('user-groups')->group(function () {
         Route::get('', 'index');
         Route::get('add', 'edit');
         Route::post('add', 'save');
         Route::get('edit/{id}', 'edit');
-        Route::post('save/{id}', 'save');
+        Route::post('save', 'save');
         Route::get('delete/{id}', 'delete');
-        Route::post('delete/{id}', 'destroy');
-        Route::get('detail/{id}', 'detail');
     });
+
 });
