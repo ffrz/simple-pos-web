@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -13,72 +14,68 @@ class UserController extends Controller
 {
     public function index()
     {
-        $items = $this->getUserModel()->getAll();
-
-        return view('user/index', [
-            'items' => $items,
-        ]);
+        $items = User::all();
+        return view('admin.user.index', compact('items'));
     }
 
-    public function edit($id)
+    public function edit($id = 0)
     {
-        $model = $this->getUserModel();
         if ($id == 0) {
-            $item = new User();
+            $data = new User();
         } else {
-            $item = $model->find($id);
-            if (!$item) {
-                return redirect()->to(base_url('users'))->with('warning', 'Pengguna tidak ditemukan.');
+            $data = User::find($id);
+            if (!$data) {
+                return redirect('/admin/users')->with('warning', 'Pengguna tidak ditemukan.');
             }
         }
 
-        if ($item->username == 'admin') {
-            return redirect()->to(base_url('users'))->with('error', 'Akun ini tidak dapat diubah.');
+        if ($data->username == 'superadmin') {
+            return redirect('/admin/users')->with('error', 'Akun administrator ini tidak dapat diubah.');
         }
 
-        $errors = [];
+        $groups = UserGroup::all();
 
-        if ($this->request->getMethod() === 'post') {
-            if (!$id) {
-                // username tidak boleh diganti
-                $item->username = trim($this->request->getPost('username'));
-            }
+        return view('admin.user.edit', compact('data', 'groups'));
+    }
 
-            $item->fullname = trim($this->request->getPost('fullname'));
-            $item->password = $this->request->getPost('password');
-            $item->is_admin = (int)$this->request->getPost('is_admin');
-            $item->active = (int)$this->request->getPost('active');
-            $item->group_id = (int)$this->request->getPost('group_id');
+    public function save(Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:100'
+        ];
 
-            if ($item->username == '') {
-                $errors['username'] = 'Username harus diisi.';
-            } else if ($model->exists($item->username, $item->id)) {
-                $errors['username'] = 'Username sudah digunakan, harap gunakan nama lain.';
-            } else if ($item->fullname == '') {
-                $errors['fullname'] = 'Nama lengkap harus diisi.';
-            } else if (!$item->id) {
-                if ($item->password == '') {
-                    $errors['password'] = 'Kata sandi harus diisi.';
-                } else {
-                    $item->password = sha1($item->password);
-                }
-            } else if ($item->password != '') {
-                $item->password = sha1($item->password);
-            }
-
-            if (empty($errors)) {
-                $model->save($item);
-                return redirect()->to(base_url('users'))->with('info', 'Berhasil disimpan.');
-            }
-        } else {
-            $item->password = '';
+        if (!$request->id) { // nambah user baru
+            $rules['username'] = 'required|unique:users,username,' . (int)$request->id . '|min:3|max:40';
+        } else if (!empty($request->password)) { // update dan password diisi
+            $rules['password'] = 'min:5|max:40';
         }
 
-        return view('user/edit', [
-            'data' => $item,
-            'userGroups' => $this->getUserGroupModel()->getAll(),
-            'errors' => $errors,
+        $validator = Validator::make($request->all(), $rules, [
+            'name.required' => 'Nama harus diisi.',
+            'name.max' => 'Nama terlalu panjang, maksimal 100 karakter.',
+            'username.required' => 'ID Pengguna harus diisi.',
+            'username.unique' => 'ID Pengguna harus unik.',
+            'username.min' => 'ID Pengguna terlalu pendek, minial 5 karakter.',
+            'username.max' => 'ID Pengguna terlalu panjang, maksimal 40 karakter.',
+            'password.min' => 'Kata sandi terlalu pendek, minimal 5 karakter.',
+            'password.max' => 'Kata sandi terlalu panjang, maksimal 40 karakter.',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->all();
+        if (!$request->id) {
+            User::create($data);
+            $message = 'Akun pengguna ' . $data['username'] . ' telah dibuat.';
+        } else {
+            $user = User::find($request->id);
+            $user->update($data);
+            $message = 'Akun pengguna ' . $data['username'] . ' telah diperbarui.';
+        }
+
+        return redirect('/admin/users')->with('info', $message);
     }
 
     public function profile()
@@ -95,7 +92,7 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|max:100',
         ];
-        
+
         if (!empty($request->post('password'))) {
             $rules['password'] = 'min:5|max:40|confirmed';
             $rules['password_confirmation'] = 'required';
@@ -104,7 +101,6 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), $rules, [
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama terlalu panjang, maksimal 100 karakter.',
-            'password.sometimes' => 'Kata sandi kadang-kadang.',
             'password.min' => 'Kata sandi terlalu pendek, minimal 5 karakter.',
             'password.max' => 'Kata sandi terlalu panjang, maksimal 40 karakter.',
             'password.confirmed' => 'Kata sandi yang anda konfirmasi salah.',
@@ -122,31 +118,25 @@ class UserController extends Controller
         return redirect('/admin/users/profile')->with('info', 'Profil anda telah diperbarui.');
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        $model = $this->getUserModel();
-        $user = $model->find($id);
+        $user = User::with('group')->find($id);
+        $redirect_url = '/admin/users';
 
-        if ($user->username == 'admin') {
-            return redirect()->to(base_url('users'))
-                ->with('error', 'Akun <b>' . esc($user->username) . '</b> tidak dapat dihapus.');
-        } else if ($user->id == current_user()->id) {
-            return redirect()->to(base_url('users'))
+        if ($user->username == 'superadmin') {
+            return redirect($redirect_url)
+                ->with('error', 'Akun <b>' . $user->username . '</b> tidak dapat dihapus.');
+        } else if ($user->id == Auth::user()->id) {
+            return redirect($redirect_url)
                 ->with('error', 'Anda tidak dapat menghapus akun sendiri.');
         }
 
-        if ($this->request->getMethod() == 'post') {
-            $user->active = 0;
-            $model->save($user);
-            if ($model->delete($user->id)) {
-                return redirect()->to(base_url('users'))->with('info', 'Pengguna ' . esc($user->username) . ' telah dihapus.');
-            }
-
-            return redirect()->to(base_url('users'))->with('info', 'Pengguna telah dinonaktifkan.');
+        if ($request->method() == 'POST') {
+            $user->forceDelete();
+            return redirect($redirect_url)
+                ->with('info', 'Akun ' . $user->username . ' telah dihapus.');
         }
 
-        return view('user/delete', [
-            'data' => $user
-        ]);
+        return view('/admin/user/delete', compact('user'));
     }
 }

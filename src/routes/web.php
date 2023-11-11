@@ -66,12 +66,12 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     Route::controller(UserController::class)->prefix('users')->group(function () {
         Route::get('profile', 'profile');
         Route::post('update-profile', 'updateProfile');
-        
         Route::get('', 'index');
-        Route::post('add', 'save');
+        Route::get('add', 'edit');
         Route::get('edit/{id}', 'edit');
         Route::post('save', 'save');
         Route::get('delete/{id}', 'delete');
+        Route::post('delete/{id}', 'delete');
     });
 
 });

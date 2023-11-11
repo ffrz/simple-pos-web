@@ -1,0 +1,52 @@
+@extends('admin._layouts.default', [
+    'title' => 'Hapus Pengguna',
+    'menu_active' => 'system',
+    'nav_active' => 'users',
+])
+
+@section('content')
+  <div class="card card-primary">
+    <form class="form-horizontal quick-form" method="POST" action="{{ url('/admin/users/delete/' . $user->id) }}">
+      @csrf
+      <div class="card-body">
+        <h4>Konfirmasi Penghapusan Akun Pengguna</h4>
+        <p>Anda benar-benar akan menghapus akun pengguna <b>{{ $user->username }}</b>?</p>
+        <table>
+          <tr>
+            <td>Username</td>
+            <td>:</td>
+            <td>{{ $user->username }}</td>
+          </tr>
+          <tr>
+            <td>Nama Lengkap</td>
+            <td>:</td>
+            <td>{{ $user->name }}</td>
+          </tr>
+          <tr>
+            <td>Grup</td>
+            <td>:</td>
+            <td>{{ $user->group->name }}</td>
+          </tr>
+          <tr>
+            <td>Aktif</td>
+            <td>:</td>
+            <td>{{ $user->is_active ? 'Ya' : 'Tidak' }}</td>
+          </tr>
+          <tr>
+            <td>Administrator</td>
+            <td>:</td>
+            <td>{{ $user->is_admin ? 'Ya' : 'Tidak' }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-footer">
+        <div>
+          <a href="{{ url('/admin/users') }}" class="btn btn-default mr-2"><i class="fas fa-arrow-left mr-1"></i>
+            Kembali</a>
+          <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can mr-1"></i> HAPUS PERMANEN</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+@endsection

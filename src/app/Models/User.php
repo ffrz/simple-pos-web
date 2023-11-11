@@ -44,4 +44,9 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(UserGroup::class);
+    }
 }
