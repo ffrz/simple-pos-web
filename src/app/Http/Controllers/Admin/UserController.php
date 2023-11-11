@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,8 +25,7 @@ class UserController extends Controller
         $model = $this->getUserModel();
         if ($id == 0) {
             $item = new User();
-        }
-        else {
+        } else {
             $item = $model->find($id);
             if (!$item) {
                 return redirect()->to(base_url('users'))->with('warning', 'Pengguna tidak ditemukan.');
@@ -52,22 +52,17 @@ class UserController extends Controller
 
             if ($item->username == '') {
                 $errors['username'] = 'Username harus diisi.';
-            }
-            else if ($model->exists($item->username, $item->id)) {
+            } else if ($model->exists($item->username, $item->id)) {
                 $errors['username'] = 'Username sudah digunakan, harap gunakan nama lain.';
-            }
-            else if ($item->fullname == '') {
+            } else if ($item->fullname == '') {
                 $errors['fullname'] = 'Nama lengkap harus diisi.';
-            }
-            else if (!$item->id) {
+            } else if (!$item->id) {
                 if ($item->password == '') {
                     $errors['password'] = 'Kata sandi harus diisi.';
-                }
-                else {
+                } else {
                     $item->password = sha1($item->password);
                 }
-            }
-            else if ($item->password != '') {
+            } else if ($item->password != '') {
                 $item->password = sha1($item->password);
             }
 
@@ -75,11 +70,10 @@ class UserController extends Controller
                 $model->save($item);
                 return redirect()->to(base_url('users'))->with('info', 'Berhasil disimpan.');
             }
-        }
-        else {
+        } else {
             $item->password = '';
         }
-        
+
         return view('user/edit', [
             'data' => $item,
             'userGroups' => $this->getUserGroupModel()->getAll(),
@@ -89,43 +83,44 @@ class UserController extends Controller
 
     public function profile()
     {
-        $id = current_user()->id;
-        $errors = [];
-
-        $model = $this->getUserModel(); 
-        $item = $model->find($id);
-
-        if ($this->request->getMethod() === 'post') {
-            $item->fullname = trim($this->request->getPost('fullname'));
-            $item->password1 = $this->request->getPost('password1');
-            $item->password2 = $this->request->getPost('password2');
-            
-            if ($item->fullname == '') {
-                $errors['fullname'] = 'Nama lengkap harus diisi.';
-            }
-
-            if ($item->password1 != '') {
-                // user ingin mengganti password
-                if ($item->password1 != $item->password2) {
-                    $errors['password2'] = 'Kata sandi tidak cocok.';
-                }
-            }
-
-            if (empty($errors)) {
-                $item->password = sha1($item->password1);
-                $model->save($item);
-                return redirect()->to(base_url('users'))->with('info', 'Berhasil disimpan.');
-            }
-        }
-        else {
-            $item->password1 = '';
-            $item->password2 = '';
+        if (!$user = User::find(Auth::user()->id)) {
+            return redirect(url('/admin/login'));
         }
 
-        return view('user/profile', [
-            'data' => $item,
-            'errors' => $errors,
+        return view('admin.user.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:100',
+        ];
+        
+        if (!empty($request->post('password'))) {
+            $rules['password'] = 'min:5|max:40|confirmed';
+            $rules['password_confirmation'] = 'required';
+        }
+
+        $validator = Validator::make($request->all(), $rules, [
+            'name.required' => 'Nama grup harus diisi.',
+            'name.unique' => 'Nama grup sudah digunakan.',
+            'name.max' => 'Nama grup terlalu panjang, maksimal 100 karakter.',
+            'password.sometimes' => 'Kata sandi kadang-kadang.',
+            'password.min' => 'Kata sandi terlalu pendek, minimal 5 karakter.',
+            'password.max' => 'Kata sandi terlalu panjang, maksimal 40 karakter.',
+            'password.confirmed' => 'Kata sandi yang anda konfirmasi salah.',
+            'password_confirmation.required' => 'Anda belum mengkonfirmasi kata sandi.',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $data = $request->only(['name', 'password']);
+        $user = User::find(Auth::user()->id);
+        $user->update($data);
+
+        return redirect('/admin/users/profile')->with('info', 'Profil anda telah diperbarui.');
     }
 
     public function delete($id)
@@ -136,10 +131,9 @@ class UserController extends Controller
         if ($user->username == 'admin') {
             return redirect()->to(base_url('users'))
                 ->with('error', 'Akun <b>' . esc($user->username) . '</b> tidak dapat dihapus.');
-        }
-        else if ($user->id == current_user()->id) {
+        } else if ($user->id == current_user()->id) {
             return redirect()->to(base_url('users'))
-            ->with('error', 'Anda tidak dapat menghapus akun sendiri.');
+                ->with('error', 'Anda tidak dapat menghapus akun sendiri.');
         }
 
         if ($this->request->getMethod() == 'post') {

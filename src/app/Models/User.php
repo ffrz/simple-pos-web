@@ -21,7 +21,8 @@ class User extends Authenticatable
         'group_id',
         'username',
         'password',
-        'active',
+        'is_active',
+        'is_admin',
         'name',
     ];
 

@@ -22,31 +22,36 @@ class UserSeeder extends Seeder
         User::insert([
             'username' => 'superadmin',
             'password' => Hash::make('12345'),
-            'active' => true,
+            'is_active' => true,
+            'is_admin' => true,
             'group_id' => 1,
         ]);
         User::insert([
             'username' => 'maintainer',
             'password' => Hash::make('12345'),
-            'active' => true,
+            'is_active' => true,
+            'is_admin' => false,
             'group_id' => 2,
         ]);
         User::insert([
             'username' => 'owner',
             'password' => Hash::make('12345'),
-            'active' => false,
+            'is_active' => false,
+            'is_admin' => true,
             'group_id' => 11,
         ]);
         User::insert([
             'username' => 'admin',
             'password' => Hash::make('12345'),
-            'active' => true,
+            'is_active' => true,
+            'is_admin' => false,
             'group_id' => 12,
         ]);
         User::insert([
             'username' => 'kasir',
             'password' => Hash::make('12345'),
-            'active' => false,
+            'is_active' => false,
+            'is_admin' => false,
             'group_id' => 13,
         ]);
     }

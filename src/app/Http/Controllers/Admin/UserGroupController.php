@@ -28,7 +28,7 @@ class UserGroupController extends Controller
         if ($id) {
             $data = UserGroup::find($id);
             if (!$data) {
-                return redirect(url('admin/user-groups'))->with('warning', 'Grup Pengguna tidak ditemukan.');
+                return redirect('/admin/user-groups')->with('warning', 'Grup Pengguna tidak ditemukan.');
             }
         }
 
@@ -53,13 +53,12 @@ class UserGroupController extends Controller
 
         if (!$request->id) {
             UserGroup::create($data);
-        }
-        else {
+        } else {
             $group = UserGroup::find($request->id);
             $group->update($data);
         }
 
-        return redirect(url('/admin/user-groups'))->with('info', 'Grup pengguna telah disimpan.');
+        return redirect('/admin/user-groups')->with('info', 'Grup pengguna telah disimpan.');
     }
 
     public function delete($id)
@@ -72,6 +71,6 @@ class UserGroupController extends Controller
             $message = 'Grup pengguna ' . $userGroup->name . ' telah dihapus.';
         }
 
-        return redirect(url('/admin/user-groups'))->with('info', $message);
+        return redirect('/admin/user-groups')->with('info', $message);
     }
 }

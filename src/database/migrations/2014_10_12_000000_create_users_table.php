@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id');
             $table->string('username')->unique();
             $table->string('password')->default('');
-            $table->boolean('active')->default(false);
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_admin')->default(false);
             $table->string('name')->default('');
             $table->rememberToken();
             $table->timestamps();

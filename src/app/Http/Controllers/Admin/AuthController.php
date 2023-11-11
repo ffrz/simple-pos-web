@@ -43,7 +43,7 @@ class AuthController extends Controller
         if (!Auth::attempt($request->only(['username', 'password']))) {
             $error = 'Username atau password salah!';
         }
-        else if (!Auth::user()->active) {
+        else if (!Auth::user()->is_active) {
             $error = 'Akun anda tidak aktif. Silahkan hubungi administrator!';
             $this->_logout($request);
         }

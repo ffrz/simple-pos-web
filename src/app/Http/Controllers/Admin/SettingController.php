@@ -36,6 +36,6 @@ class SettingController extends Controller
         Setting::setValue('app.store_address', $request->post('store_address', ''));
         DB::commit();
 
-        return redirect(url('admin/settings'))->with('info', 'Pengaturan telah disimpan.');
+        return redirect('admin/settings')->with('info', 'Pengaturan telah disimpan.');
     }
 }
