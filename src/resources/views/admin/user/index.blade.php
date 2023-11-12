@@ -5,7 +5,7 @@
 ])
 @section('right-menu')
   <li class="nav-item">
-    <a href="{{ url('/admin/users/add') }}" class="btn plus-btn btn-primary mr-2" title="Baru"><i class="fa fa-plus"></i></a>
+    <a href="{{ url('/admin/users/edit/0') }}" class="btn plus-btn btn-primary mr-2" title="Baru"><i class="fa fa-plus"></i></a>
   </li>
 @endsection
 @section('content')

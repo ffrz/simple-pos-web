@@ -5,7 +5,7 @@
 
 @section('content')
   <div class="card card-primary">
-    <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/users/update-profile') }}">
+    <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/users/profile') }}">
       <div class="card-body">
         @csrf
         <div class="form-row">

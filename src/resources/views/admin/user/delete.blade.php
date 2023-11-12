@@ -43,7 +43,7 @@
         <div>
           <a href="{{ url('/admin/users') }}" class="btn btn-default mr-2"><i class="fas fa-arrow-left mr-1"></i>
             Kembali</a>
-          <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can mr-1"></i> HAPUS PERMANEN</button>
+          <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can mr-1"></i> HAPUS</button>
         </div>
       </div>
     </form>

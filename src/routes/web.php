@@ -64,14 +64,13 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     });
 
     Route::controller(UserController::class)->prefix('users')->group(function () {
-        Route::get('profile', 'profile');
-        Route::post('update-profile', 'updateProfile');
         Route::get('', 'index');
-        Route::get('add', 'edit');
         Route::get('edit/{id}', 'edit');
-        Route::post('save', 'save');
+        Route::post('edit/{id}', 'edit');
         Route::get('delete/{id}', 'delete');
         Route::post('delete/{id}', 'delete');
+        Route::get('profile', 'profile');
+        Route::post('profile', 'profile');
     });
 
 });

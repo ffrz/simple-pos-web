@@ -1,5 +1,5 @@
 @extends('admin._layouts.default', [
-    'title' => (!$data['id'] ? 'Tambah' : 'Edit') . ' Pengguna',
+    'title' => (!$user->id ? 'Tambah' : 'Edit') . ' Pengguna',
     'menu_active' => 'system',
     'nav_active' => 'users',
 ])
@@ -7,17 +7,17 @@
 @section('content')
   <div class="col-md-8">
     <div class="card card-primary">
-      <form class="form-horizontal quick-form" method="POST" action="{{ url('/admin/users/save') }}">
+      <form class="form-horizontal quick-form" method="POST" action="{{ url('/admin/users/edit/' . (int)$user->id) }}">
         @csrf
-        <input type="hidden" name="id" value="{{ $data->id }}">
+        <input type="hidden" name="id" value="{{ (int)$user->id }}">
         <div class="card-body">
           <div class="form-group row">
             <label for="username" class="col-sm-4 col-form-label">Username</label>
             <div class="col-sm-8">
               <input type="text" class="form-control @error('username') 'is-invalid' @enderror" autofocus
-                id="username" placeholder="Username" name="username" {{ $data->id ? 'readonly' : '' }}
-                value="{{ old('username', $data->username) }}">
-              @if (!$data->id)
+                id="username" placeholder="Username" name="username" {{ $user->id ? 'readonly' : '' }}
+                value="{{ old('username', $user->username) }}">
+              @if (!$user->id)
                 <div class="text-muted">Setelah disimpan username tidak bisa diganti.</div>
                 @error('username')
                   <span class="text-danger">{{ $message }}</span>
@@ -29,7 +29,7 @@
             <label for="name" class="col-sm-4 col-form-label">Nama Lengkap</label>
             <div class="col-sm-8">
               <input type="text" class="form-control @error('name') 'is-invalid' @enderror" id="name"
-                placeholder="Nama Lengkap" name="name" value="{{ old('name', $data->name) }}">
+                placeholder="Nama Lengkap" name="name" value="{{ old('name', $user->name) }}">
               @error('name')
                 <span class="text-danger">{{ $message }}</span>
               @enderror
@@ -39,9 +39,9 @@
             <label for="group_id" class="col-sm-4 col-form-label">Grup Pengguna</label>
             <div class="col-sm-8">
               <select class="custom-select select2" id="group_id" name="group_id">
-                <option value="" {{ !$data->group_id ? 'selected' : '' }}>-- Pilih Grup Pengguna --</option>
+                <option value="" {{ !$user->group_id ? 'selected' : '' }}>-- Pilih Grup Pengguna --</option>
                 <?php foreach ($groups as $group) : ?>
-                <option value="{{ $group->id }}" {{ old('group_id', $data->group_id) == $group->id ? 'selected' : '' }}
+                <option value="{{ $group->id }}" {{ old('group_id', $user->group_id) == $group->id ? 'selected' : '' }}
                   title="{{ $group->description }}">
                   {{ $group->name }}
                 </option>
@@ -64,7 +64,7 @@
             <div class="col-sm-8 offset-sm-4">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input " id="active" name="is_active" value="1"
-                  {{ old('is_active', $data->is_active) ? 'checked="checked"' : '' }}>
+                  {{ old('is_active', $user->is_active) ? 'checked="checked"' : '' }}>
                 <label class="custom-control-label" for="active" title="Akun aktif dapat login">Aktif</label>
               </div>
               <div class="text-muted">Akun aktif dapat login.</div>
@@ -74,7 +74,7 @@
             <div class="col-sm-8 offset-sm-4">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input " id="is_admin" name="is_admin" value="1"
-                  {{ old('is_admin', $data->is_admin) ? 'checked="checked"' : '' }}>
+                  {{ old('is_admin', $user->is_admin) ? 'checked="checked"' : '' }}>
                 <label class="custom-control-label" for="is_admin" title="Akun pengguna pengelola">Administrator</label>
               </div>
               <p class="text-muted">Akun administrator memiliki hak akses penuh pada sistem.</p>
