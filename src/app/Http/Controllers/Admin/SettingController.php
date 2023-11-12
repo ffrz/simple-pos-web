@@ -22,14 +22,13 @@ class SettingController extends Controller
     public function save(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'store_name' => 'required',
+            'store_name' => 'required'
         ], [
-            'store_name.required' => 'Nama Toko harus diisi.',
+            'store_name.required' => 'Nama Toko harus diisi.'
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return redirect()->back()->withInput()->withErrors($validator);
-        }
 
         DB::beginTransaction();
         Setting::setValue('app.store_name', $request->post('store_name', ''));

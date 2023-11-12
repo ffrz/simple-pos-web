@@ -1,5 +1,5 @@
 @extends('admin._layouts.default', [
-    'title' => ($data['id'] ? 'Edit' : 'Tambah') . ' Pengguna',
+    'title' => ($group->id ? 'Edit' : 'Tambah') . ' Pengguna',
     'menu_active' => 'system',
     'menu_open' => 'system',
     'nav_active' => 'user-groups',
@@ -8,15 +8,14 @@
 
 @section('content')
   <div class="card card-primary">
-    <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/user-groups/save') }}">
-        @csrf
-      <input type="hidden" name="id" value="{{ $data['id'] ? $data['id'] : 0 }}">
+    <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/user-groups/edit/' . (int) $group->id) }}">
+      @csrf
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="name">Nama Grup</label>
             <input type="text" class="form-control @error('name') 'is-invalid' @enderror" autofocus id="name"
-              placeholder="Masukkan Nama Grup" name="name" value="{{ old('name', $data['name']) }}">
+              placeholder="Masukkan Nama Grup" name="name" value="{{ old('name', $group->name) }}">
             @error('name')
               <span class="text-danger">
                 {{ $message }}
@@ -27,7 +26,7 @@
             <label for="description">Deskripsi</label>
             <input type="text" class="form-control @error('description') 'is-invalid' @enderror" id="description"
               placeholder="Masukkan deskripsi grup" name="description"
-              value="{{ old('description', $data['description']) }}">
+              value="{{ old('description', $group->description) }}">
             @error('description')
               <span class="text-danger">
                 {{ $message }}
@@ -53,7 +52,7 @@
                 @foreach ($resource as $name => $label) : ?>
                     <div class="form-row">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="<?= $name ?>" name="acl[<?= $name ?>]" value="1" <?= $data->acl[$name] ? 'checked="checked"' : '' ?>>
+                            <input type="checkbox" class="custom-control-input" id="<?= $name ?>" name="acl[<?= $name ?>]" value="1" <?= $group->acl[$name] ? 'checked="checked"' : '' ?>>
                             <label class="custom-control-label" style="font-weight:normal; white-space: nowrap;" for="<?= $name ?>"><?= $label ?></label>
                         </div>
                     </div>

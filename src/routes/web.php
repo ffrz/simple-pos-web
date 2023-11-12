@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $user = Auth::user();
     if (!$user) {
-        return redirect(url('/admin/login'));
+        return redirect('/admin/login');
     }
 
     // if ($user->role_id == 1) {
@@ -31,12 +31,10 @@ Route::get('/', function () {
     // } else if ($user->role_id == 2) {
     //     return redirect(url('profile'));
     // }
-    return redirect(url('/admin/dashboard'));
+    return redirect('/admin/dashboard');
 });
 
-Route::get('/admin', function () {
-    return redirect(url('/admin/dashboard'));
-});
+Route::redirect('/admin', '/admin/dashboard');
 
 Route::get('admin/logout', [AuthController::class, 'logout']);
 
@@ -56,21 +54,15 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
 
     Route::controller(UserGroupController::class)->prefix('user-groups')->group(function () {
         Route::get('', 'index');
-        Route::get('add', 'edit');
-        Route::post('add', 'save');
-        Route::get('edit/{id}', 'edit');
-        Route::post('save', 'save');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(UserController::class)->prefix('users')->group(function () {
         Route::get('', 'index');
-        Route::get('edit/{id}', 'edit');
-        Route::post('edit/{id}', 'edit');
-        Route::get('delete/{id}', 'delete');
-        Route::post('delete/{id}', 'delete');
-        Route::get('profile', 'profile');
-        Route::post('profile', 'profile');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::match(['get', 'post'], 'delete/{id}', 'delete');
+        Route::match(['get', 'post'], 'profile', 'profile');
     });
 
 });

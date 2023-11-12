@@ -19,10 +19,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $data = [
-            'store_name' => 'Rindu Alam BS'
-        ];
-        return view('admin.auth.login', compact('data'));
+        return view('admin.auth.login');
     }
 
     public function authenticate(Request $request)
@@ -35,21 +32,18 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi harus diisi.',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return redirect()->back()->withInput()->withErrors($validator);
-        }
 
         $error = '';
         if (!Auth::attempt($request->only(['username', 'password']))) {
             $error = 'Username atau password salah!';
-        }
-        else if (!Auth::user()->is_active) {
+        } else if (!Auth::user()->is_active) {
             $error = 'Akun anda tidak aktif. Silahkan hubungi administrator!';
             $this->_logout($request);
-        }
-        else {
+        } else {
             $request->session()->regenerate();
-            return redirect(url('/admin/dashboard'));
+            return redirect('/admin/dashboard');
         }
 
         return redirect()->back()->withInput()->with('error', $error);
