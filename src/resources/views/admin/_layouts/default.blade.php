@@ -1,11 +1,3 @@
-<?php
-if (!isset($menu_active)) {
-    $menu_active = null;
-}
-
-$menu_open = $menu_active;
-
-?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -78,6 +70,7 @@ $menu_open = $menu_active;
   <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
   <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
   <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <script src="{{ asset('plugins/inputmask/jquery.inputmask.min.js') }}"></script>
   <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
   <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
   <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>

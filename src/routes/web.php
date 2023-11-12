@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CostCategoryController;
+use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -63,6 +65,18 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::match(['get', 'post'], 'delete/{id}', 'delete');
         Route::match(['get', 'post'], 'profile', 'profile');
+    });
+
+    Route::controller(CostCategoryController::class)->prefix('cost-categories')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::match(['get'], 'delete/{id}', 'delete');
+    });
+
+    Route::controller(CostController::class)->prefix('costs')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::match(['get'], 'delete/{id}', 'delete');
     });
 
 });

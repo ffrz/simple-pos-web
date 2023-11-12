@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\UserGroup;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class UserGroupSeeder extends Seeder

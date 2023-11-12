@@ -4,8 +4,9 @@
     'nav_active' => 'settings',
 ])
 @section('content')
-<div class="card card-primary">
+<div class="card card-light">
     <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/settings/save') }}">
+        @include('admin._components.card-header', ['title' => 'Pengaturan'])
         <div class="card-body">
             @csrf
             <div class="form-group row">

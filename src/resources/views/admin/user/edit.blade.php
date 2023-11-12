@@ -1,5 +1,6 @@
+<?php $title = (!$user->id ? 'Tambah' : 'Edit') . ' Pengguna' ?>
 @extends('admin._layouts.default', [
-    'title' => (!$user->id ? 'Tambah' : 'Edit') . ' Pengguna',
+    'title' => $title,
     'menu_active' => 'system',
     'nav_active' => 'users',
 ])
@@ -9,6 +10,7 @@
     <div class="card card-primary">
       <form class="form-horizontal quick-form" method="POST" action="{{ url('/admin/users/edit/' . (int)$user->id) }}">
         @csrf
+        @include('admin._components.card-header', ['title' => $title])
         <input type="hidden" name="id" value="{{ (int)$user->id }}">
         <div class="card-body">
           <div class="form-group row">

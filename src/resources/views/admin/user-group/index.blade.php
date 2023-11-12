@@ -1,7 +1,6 @@
 @extends('admin._layouts.default', [
     'title' => 'Grup Pengguna',
     'menu_active' => 'system',
-    'menu_open' => 'system',
     'nav_active' => 'user-groups'
 ])
 
@@ -13,7 +12,8 @@
 @endSection
 
 @section('content')
-<div class="card card-primary">
+<div class="card card-light">
+  @include('admin._components.card-header', ['title' => 'Grup Pengguna'])
   <div class="card-body">
     <div class="row">
       <div class="col-md-12">

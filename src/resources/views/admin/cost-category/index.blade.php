@@ -1,18 +1,19 @@
 @extends('admin._layouts.default', [
-    'title' => 'Pengguna',
-    'menu_active' => 'system',
-    'nav_active' => 'users',
+    'title' => 'Kategori Biaya',
+    'menu_active' => 'cost',
+    'nav_active' => 'cost-category',
 ])
 
 @section('right-menu')
   <li class="nav-item">
-    <a href="{{ url('/admin/users/edit/0') }}" class="btn plus-btn btn-primary mr-2" title="Baru"><i class="fa fa-plus"></i></a>
+    <a href="<?= url('admin/cost-categories/edit/0') ?>" class="btn plus-btn btn-primary mr-2" title="Baru"><i
+        class="fa fa-plus"></i></a>
   </li>
 @endsection
 
 @section('content')
   <div class="card card-light">
-    @include('admin._components.card-header', ['title' => 'Grup Pengguna'])
+    @include('admin._components.card-header', ['title' => 'Kategori Biaya'])
     <div class="card-body">
       <div class="row">
         <div class="col-md-12">
@@ -20,35 +21,27 @@
             style="width:100%">
             <thead>
               <tr>
-                <th>ID Pengguna</th>
-                <th>Nama Lengkap</th>
-                <th>Status</th>
-                <th>Grup</th>
+                <th style="max-width:25%">Nama Kategori</th>
+                <th>Deskripsi</th>
                 <th class="text-center" style="max-width:10%">Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($items as $item)
+              <?php foreach ($items as $item) : ?>
               <tr>
-                <td>
-                  {{ $item->username }}
-                  @if ($item->is_admin)
-                  <span class="badge badge-warning">Administrator</span>
-                  @endif
-                </td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->is_active ? 'Aktif' : 'Nonaktif' }}</td>
-                <td>{{ $item->group_name }}</td>
+                <td>{{ $item->description }}</td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="{{ url("/admin/users/edit/$item->id") }}" class="btn btn-default btn-sm"><i
+                    <a href="{{ url("/admin/cost-categories/edit/$item->id") }}" class="btn btn-default btn-sm"><i
                         class="fa fa-edit"></i></a>
-                    <a href="{{ url("/admin/users/delete/$item->id") }}" class="btn btn-danger btn-sm"><i
+                    <a onclick="return confirm('Hapus kategori?')"
+                      href="{{ url("/admin/cost-categories/delete/$item->id") }}" class="btn btn-danger btn-sm"><i
                         class="fa fa-trash"></i></a>
                   </div>
                 </td>
               </tr>
-              @endforeach
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>
@@ -65,7 +58,7 @@
       ];
       DATATABLES_OPTIONS.columnDefs = [{
         orderable: false,
-        targets: 4
+        targets: 1
       }];
       $('.data-table').DataTable(DATATABLES_OPTIONS);
     });

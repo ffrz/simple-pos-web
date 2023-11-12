@@ -1,7 +1,7 @@
+<?php $title = ($group->id ? 'Edit' : 'Tambah') . ' Pengguna' ?>
 @extends('admin._layouts.default', [
-    'title' => ($group->id ? 'Edit' : 'Tambah') . ' Pengguna',
+    'title' => $title,
     'menu_active' => 'system',
-    'menu_open' => 'system',
     'nav_active' => 'user-groups',
     'back_button_link' => url('/admin/user-groups/'),
 ])
@@ -10,6 +10,7 @@
   <div class="card card-primary">
     <form class="form-horizontal quick-form" method="POST" action="{{ url('admin/user-groups/edit/' . (int) $group->id) }}">
       @csrf
+      @include('admin._components.card-header', ['title' => $title])
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-4">

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserGroup extends Model
+class Cost extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,14 @@ class UserGroup extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'category_id',
         'description',
+        'amount',
+        'date',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(CostCategory::class);
+    }
 }

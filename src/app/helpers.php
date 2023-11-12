@@ -20,19 +20,6 @@ function current_user_can($access)
 
     return false;
 }
-// /**
-//  * Helper function untuk merender kelas 'menu-open' pada sidebar
-//  * @param $self View
-//  * @param $name nama menu
-//  * @return string
-//  */
-// function menu_open($self, $name) {
-//     return !empty($self) && $self == $name ? 'menu-open' : '';
-// }
-
-// function menu_active($self, $name) {
-//     return !empty($self) && $self == $name ? 'active' : '';
-// }
 
 function datetime_from_input($str)
 {

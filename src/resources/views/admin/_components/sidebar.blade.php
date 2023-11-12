@@ -1,4 +1,11 @@
-<?php use App\Common\Acl; ?>
+<?php
+use App\Common\Acl;
+
+if (!isset($menu_active)) {
+    $menu_active = null;
+}
+
+?>
 <aside class="main-sidebar sidebar-light-primary elevation-4">
   <a href="{{ url('/admin/') }}" class="brand-link">
     <img src="{{ url('dist/img/logo.png') }}" alt="App Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -14,7 +21,7 @@
             <p>Dashboard</p>
           </a>
         </li>
-        <li class="nav-item {{ $menu_open == 'report' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'report' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'report' ? 'active' : '' }}">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
@@ -53,27 +60,39 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="{{ url('/admin/sales-orders/') }}"
-            class="nav-link {{ $nav_active == 'sales-order' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'sales' ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ $menu_active == 'sales' ? 'active' : '' }}">
             <i class="nav-icon fas fa-cart-shopping"></i>
-            <p>Penjualan</p>
+            <p>
+              Penjualan
+              <i class="right fas fa-angle-left"></i>
+            </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ url('/admin/sales-orders/') }}"
+                class="nav-link {{ $nav_active == 'sales-order' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-cart-shopping"></i>
+                <p>Penjualan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url('/admin/service-orders/') }}"
+                class="nav-link {{ $nav_active == 'service-order' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-screwdriver-wrench"></i>
+                <p>Servis</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url('admin/customers/') }}"
+                class="nav-link {{ $nav_active == 'customer' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Pelanggan</p>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a href="{{ url('/admin/service-orders/') }}"
-            class="nav-link {{ $nav_active == 'service-order' ? 'active' : '' }}">
-            <i class="nav-icon fas fa-screwdriver-wrench"></i>
-            <p>Servis</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url('admin/customers/') }}" class="nav-link {{ $nav_active == 'customer' ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>Pelanggan</p>
-          </a>
-        </li>
-        <li class="nav-item {{ $menu_open == 'inventory' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'inventory' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'inventory' ? 'active' : '' }}">
             <i class="nav-icon fas fa-warehouse"></i>
             <p>
@@ -111,7 +130,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item {{ $menu_open == 'purchase-order' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'purchase-order' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'purchase-order' ? 'active' : '' }}">
             <i class="nav-icon fas fa-truck-fast"></i>
             <p>
@@ -136,7 +155,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item {{ $menu_open == 'cost' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'cost' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'cost' ? 'active' : '' }}">
             <i class="nav-icon fas fa-receipt"></i>
             <p>
@@ -160,7 +179,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item {{ $menu_open == 'finance' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'finance' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'finance' ? 'active' : '' }}">
             <i class="nav-icon fas fa-wallet"></i>
             <p>
@@ -192,7 +211,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item {{ $menu_open == 'system' ? 'menu-open' : '' }}">
+        <li class="nav-item {{ $menu_active == 'system' ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ $menu_active == 'system' ? 'active' : '' }}">
             <i class="nav-icon fas fa-gears"></i>
             <p>

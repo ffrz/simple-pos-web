@@ -5,11 +5,12 @@
 ])
 
 @section('content')
-  <div class="card card-primary">
+  <div class="card card-light">
     <form class="form-horizontal quick-form" method="POST" action="{{ url('/admin/users/delete/' . $user->id) }}">
       @csrf
+      @include('admin._components.card-header', ['title' => 'Hapus Pengguna'])
       <div class="card-body">
-        <h4>Konfirmasi Penghapusan Akun Pengguna</h4>
+        <h5>Konfirmasi Penghapusan Akun Pengguna</h5>
         <p>Anda benar-benar akan menghapus akun pengguna <b>{{ $user->username }}</b>?</p>
         <table>
           <tr>

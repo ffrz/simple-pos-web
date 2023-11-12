@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\HasApiTokens;
 
-class Setting extends Authenticatable
+class Setting extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
     public $timestamps = false;
     protected $primaryKey = 'key';
     public $incrementing = false;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserGroup extends Model
+class CostCategory extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -15,4 +15,5 @@ class UserGroup extends Model
         'name',
         'description',
     ];
+    
 }
