@@ -15,8 +15,8 @@ class SupplierController extends PartyController
     public function view($id)
     {
         $data = Party::find($id);
-        // $salesOrders = $this->getStockUpdateModel()->getAllByPartyId($party->id);
-        $salesOrders = [];
-        return view($this->view_path . '.view', compact('data', 'salesOrders'));
+        // $purchase_orders = $this->getStockUpdateModel()->getAllByPartyId($party->id);
+        $purchase_orders = [];
+        return view($this->view_path . '.view', compact('data', 'purchase_orders'));
     }
 }

@@ -130,8 +130,8 @@ if (!isset($menu_active)) {
             </li>
           </ul>
         </li>
-        <li class="nav-item {{ $menu_active == 'purchase-order' ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ $menu_active == 'purchase-order' ? 'active' : '' }}">
+        <li class="nav-item {{ $menu_active == 'purchasing' ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ $menu_active == 'purchasing' ? 'active' : '' }}">
             <i class="nav-icon fas fa-truck-fast"></i>
             <p>
               Pembelian

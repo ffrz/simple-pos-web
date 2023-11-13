@@ -1,19 +1,19 @@
 @extends('admin._layouts.default', [
-    'title' => 'Pemasok',
-    'menu_active' => 'purchasing',
-    'nav_active' => 'supplier',
+    'title' => 'Pelanggan',
+    'menu_active' => 'sales',
+    'nav_active' => 'customer',
 ])
 
 @section('right-menu')
   <li class="nav-item">
-    <a href="<?= url('admin/suppliers/edit/0') ?>" class="btn plus-btn btn-primary mr-2" title="Baru"><i
+    <a href="<?= url('admin/customers/edit/0') ?>" class="btn plus-btn btn-primary mr-2" title="Baru"><i
         class="fa fa-plus"></i></a>
   </li>
 @endsection
 
 @section('content')
   <div class="card card-light">
-    @include('admin._components.card-header', ['title' => 'Daftar Pemasok'])
+    @include('admin._components.card-header', ['title' => 'Daftar Pelanggan'])
     <div class="card-body">
       <div class="row">
         <div class="col-md-12 table-responsive">
@@ -37,13 +37,13 @@
                 <td><?= e($item->url) ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="<?= url("/admin/suppliers/view/$item->id") ?>" class="btn btn-default btn-sm">
+                    <a href="<?= url("/admin/customers/view/$item->id") ?>" class="btn btn-default btn-sm">
                       <i class="fa fa-eye"></i>
                     </a>
-                    <a href="<?= url("/admin/suppliers/edit/$item->id") ?>" class="btn btn-default btn-sm">
+                    <a href="<?= url("/admin/customers/edit/$item->id") ?>" class="btn btn-default btn-sm">
                       <i class="fa fa-edit"></i>
                     </a>
-                    <a onclick="return confirm('Hapus pemasok?')" href="<?= url("/admin/suppliers/delete/$item->id") ?>" class="btn btn-danger btn-sm">
+                    <a onclick="return confirm('Hapus pemasok?')" href="<?= url("/admin/customers/delete/$item->id") ?>" class="btn btn-danger btn-sm">
                       <i class="fa fa-trash"></i>
                     </a>
                   </div>

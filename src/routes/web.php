@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CashTransactionCategoryController;
 use App\Http\Controllers\Admin\CashTransactionController;
 use App\Http\Controllers\Admin\CostCategoryController;
 use App\Http\Controllers\Admin\CostController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;

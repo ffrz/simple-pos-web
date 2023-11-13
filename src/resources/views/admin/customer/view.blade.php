@@ -1,12 +1,12 @@
 <?php
-$title = 'Rincian Pemasok';
+$title = 'Rincian Pelanggan';
 ?>
 
 @extends('admin._layouts.default', [
     'title' => $title,
-    'menu_active' => 'purchasing',
-    'nav_active' => 'supplier',
-    'back_button_link' => url('/admin/suppliers/'),
+    'menu_active' => 'sales',
+    'nav_active' => 'customer',
+    'back_button_link' => url('/admin/customers/'),
 ])
 
 @section('content')
@@ -71,10 +71,10 @@ $title = 'Rincian Pemasok';
                 </tr>
               </thead>
               <tbody>
-                @forelse ($purchase_orders as $item)
+                @forelse ($sales_orders as $item)
                   <tr>
                     <td class="text-center">
-                      <a href="<?= url("purchase-orders/view/$item->id") ?>">
+                      <a href="<?= url("admin/sales-orders/view/$item->id") ?>">
                         <?= format_stock_update_code($item->type, $item->code) ?>
                       </a>
                     </td>
@@ -95,7 +95,7 @@ $title = 'Rincian Pemasok';
       </div>
     </div>
     <div class="card-footer">
-      <a href="<?= url('/admin/suppliers/') ?>" class="btn btn-default"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
+      <a href="<?= url('/admin/customers/') ?>" class="btn btn-default"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
     </div>
   </div>
 @endSection

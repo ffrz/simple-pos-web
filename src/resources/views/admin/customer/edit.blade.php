@@ -1,12 +1,12 @@
 <?php
-$title = ($item->id ? 'Edit' : 'Tambah') . ' Pemasok';
+$title = ($item->id ? 'Edit' : 'Tambah') . ' Pelanggan';
 ?>
 
 @extends('admin._layouts.default', [
     'title' => $title,
-    'menu_active' => 'purchasing',
-    'nav_active' => 'supplier',
-    'back_button_link' => url('/admin/suppliers/'),
+    'menu_active' => 'sales',
+    'nav_active' => 'customer',
+    'back_button_link' => url('/admin/customers/'),
 ])
 
 @section('content')
