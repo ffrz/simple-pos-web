@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CashTransaction extends Model
 {
@@ -15,4 +16,15 @@ class CashTransaction extends Model
         'ref_type',
         'ref_id',
     ];
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(CashAccount::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(CashTransactionCategory::class);
+    }
+
 }

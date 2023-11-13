@@ -4,7 +4,6 @@
     'nav_active' => 'cash-transaction-category',
 ])
 
-
 @section('right-menu')
   <li class="nav-item">
     <a href="{{ url('admin/cash-transaction-categories/edit/0') }}" class="btn plus-btn btn-primary mr-2" title="Baru"><i

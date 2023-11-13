@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CashAccountController;
 use App\Http\Controllers\Admin\CashTransactionCategoryController;
+use App\Http\Controllers\Admin\CashTransactionController;
 use App\Http\Controllers\Admin\CostCategoryController;
 use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -88,6 +89,12 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     });
 
     Route::controller(CashTransactionCategoryController::class)->prefix('cash-transaction-categories')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::match(['get'], 'delete/{id}', 'delete');
+    });
+
+    Route::controller(CashTransactionController::class)->prefix('cash-transactions')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::match(['get'], 'delete/{id}', 'delete');

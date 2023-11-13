@@ -17,26 +17,17 @@ class CostController extends Controller
     {
         $filter = new \stdClass;
         $filter->year = (int)$request->year;
-        $filter->month = $request->month;
+        $filter->month = (int)$request->month;
         
-        if ($filter->year == 0) {
+        if ($filter->year == 0)
             $filter->year = date('Y');
-        }
-        if ($filter->month == null) {
-            $filter->month = date('m');
-        }
 
-        if ($filter->month < 0 || $filter->month > 12) {
+        if ($filter->month < 1 || $filter->month > 12)
             $filter->month = date('m');
-        }
 
-        $query = Cost::query();
+        $query = Cost::with('category');
         $query->whereYear('date', '=', $filter->year);
-
-        if ($filter->month != 0) {
-            $query->whereMonth('date', '=', $filter->month);
-        }
-
+        $query->whereMonth('date', '=', $filter->month);
         $items = $query->get();
 
         return view('admin.cost.index', compact('items', 'filter'));
