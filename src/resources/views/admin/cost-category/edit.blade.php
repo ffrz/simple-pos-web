@@ -1,5 +1,5 @@
 <?php
-  $title = ($item->id ? 'Edit' : 'Tambah') . ' Biaya';
+  $title = ($item->id ? 'Edit' : 'Tambah') . ' Kategori Biaya';
 ?>
 
 @extends('admin._layouts.default', [

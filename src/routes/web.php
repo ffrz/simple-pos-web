@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CashTransactionController;
 use App\Http\Controllers\Admin\CostCategoryController;
 use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserGroupController;
@@ -95,6 +96,12 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     });
 
     Route::controller(CashTransactionController::class)->prefix('cash-transactions')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::match(['get'], 'delete/{id}', 'delete');
+    });
+
+    Route::controller(ProductCategoryController::class)->prefix('product-categories')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::match(['get'], 'delete/{id}', 'delete');
