@@ -64,7 +64,9 @@
     </div>
   </form>
   <div class="card card-light">
-    @include('admin._components.card-header', ['title' => 'Biaya Operasional - ' . month_names($filter->month) . ' ' . $filter->year])
+    @include('admin._components.card-header', [
+        'title' => 'Biaya Operasional - ' . month_names($filter->month) . ' ' . $filter->year,
+    ])
     <div class="card-body">
       <div class="row">
         <div class="col-md-12">
@@ -85,8 +87,8 @@
                 <?php $total += $item->amount; ?>
                 <tr>
                   <td class="text-center">{{ format_date($item->date) }}</td>
-                  <td class="text-center">{{ $item->category_name }}</td>
-                  <td class="text-right">{{ format_number($item->amount) }}</td>
+                  <td class="text-center">{{ $item->category->name }}</td>
+                  <td class="text-right">{{ $item->amount }}</td>
                   <td>{{ $item->description }}</td>
                   <td class="text-center">
                     <div class="btn-group">
@@ -120,9 +122,14 @@
         [0, 'asc']
       ];
       DATATABLES_OPTIONS.columnDefs = [{
-        orderable: false,
-        targets: 4
-      }];
+          orderable: false,
+          targets: 4
+        },
+        {
+          render: $.fn.dataTable.render.number('.', ',', 0, ''),
+          targets: 2
+        }
+      ];
       $('.data-table').DataTable(DATATABLES_OPTIONS);
     });
   </script>
