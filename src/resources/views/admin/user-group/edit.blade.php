@@ -15,7 +15,7 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="name">Nama Grup</label>
-            <input type="text" class="form-control @error('name') 'is-invalid' @enderror" autofocus id="name"
+            <input type="text" class="form-control @error('name') is-invalid @enderror" autofocus id="name"
               placeholder="Masukkan Nama Grup" name="name" value="{{ old('name', $group->name) }}">
             @error('name')
               <span class="text-danger">
@@ -25,7 +25,7 @@
           </div>
           <div class="form-group col-md-8">
             <label for="description">Deskripsi</label>
-            <input type="text" class="form-control @error('description') 'is-invalid' @enderror" id="description"
+            <input type="text" class="form-control @error('description') is-invalid @enderror" id="description"
               placeholder="Masukkan deskripsi grup" name="description"
               value="{{ old('description', $group->description) }}">
             @error('description')

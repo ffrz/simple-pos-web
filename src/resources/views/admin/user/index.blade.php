@@ -12,7 +12,7 @@
 
 @section('content')
   <div class="card card-light">
-    @include('admin._components.card-header', ['title' => 'Grup Pengguna'])
+    @include('admin._components.card-header', ['title' => 'Pengguna'])
     <div class="card-body">
       <div class="row">
         <div class="col-md-12">

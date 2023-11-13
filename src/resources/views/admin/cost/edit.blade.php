@@ -24,7 +24,7 @@
             <div class="col-sm-3">
               <div class="input-group date" id="date" data-target-input="nearest">
                 <input autofocus type="text"
-                  class="form-control datetimepicker-input @error('date') 'is-invalid' @enderror" data-target="#date"
+                  class="form-control datetimepicker-input @error('date') is-invalid @enderror" data-target="#date"
                   name="date" value="{{ old('date', format_date($item->date)) }}" />
                 <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -38,7 +38,7 @@
           <div class="form-group row">
             <label for="category_id" class="col-sm-3 col-form-label">Kategori</label>
             <div class="col-sm-9">
-              <select class="custom-select select2 @error('category_id') 'is-invalid' @enderror" id="category_id"
+              <select class="custom-select select2 @error('category_id') is-invalid @enderror" id="category_id"
                 name="category_id">
                 <option value="" {{ !$item->category_id ? 'selected' : '' }}>-- Kategori --</option>
                 @foreach ($categories as $category)
@@ -55,7 +55,7 @@
           <div class="form-group row">
             <label for="description" class="col-sm-3 col-form-label">Deskripsi</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control @error('description') 'is-invalid' @enderror" id="description"
+              <input type="text" class="form-control @error('description') is-invalid @enderror" id="description"
                 placeholder="Deskripsi" name="description" value="<?= e($item->description) ?>">
               @error('description')
                 <span class="text-danger">{{ $message }}</span>
@@ -65,7 +65,7 @@
           <div class="form-group row">
             <label for="amount" class="col-sm-3 col-form-label">Jumlah Biaya (Rp.)</label>
             <div class="col-sm-3">
-              <input type="text" class="form-control text-right @error('amount') 'is-invalid' @enderror" id="amount"
+              <input type="text" class="form-control text-right @error('amount') is-invalid @enderror" id="amount"
                 name="amount" value="{{ old('amount', $item->amount) }}" inputmode="decimal">
               @error('amount')
                 <span class="text-danger">{{ $message }}</span>

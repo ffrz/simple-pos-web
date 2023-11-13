@@ -16,7 +16,7 @@
           <div class="form-group row">
             <label for="username" class="col-sm-4 col-form-label">Username</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control @error('username') 'is-invalid' @enderror" autofocus
+              <input type="text" class="form-control @error('username') is-invalid @enderror" autofocus
                 id="username" placeholder="Username" name="username" {{ $user->id ? 'readonly' : '' }}
                 value="{{ old('username', $user->username) }}">
               @if (!$user->id)
@@ -30,7 +30,7 @@
           <div class="form-group row">
             <label for="name" class="col-sm-4 col-form-label">Nama Lengkap</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control @error('name') 'is-invalid' @enderror" id="name"
+              <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                 placeholder="Nama Lengkap" name="name" value="{{ old('name', $user->name) }}">
               @error('name')
                 <span class="text-danger">{{ $message }}</span>
@@ -54,7 +54,7 @@
           <div class="form-group row">
             <label for="password" class="col-sm-4 col-form-label">Kata Sandi</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control @error('password') 'is-invalid' @enderror" id="password"
+              <input type="text" class="form-control @error('password') is-invalid @enderror" id="password"
                 placeholder="Kata Sandi" name="password" value="{{ old('password') }}">
               <div class="text-muted">Isi untuk mengganti kata sandi.</div>
               @error('password')

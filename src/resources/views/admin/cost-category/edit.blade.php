@@ -19,7 +19,7 @@
           <div class="form-group row">
             <label for="name" class="col-sm-3 col-form-label">Nama Kategori</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control @error('name') 'is-invalid' @enderror" autofocus id="name"
+              <input type="text" class="form-control @error('name') is-invalid @enderror" autofocus id="name"
                 placeholder="Nama kategori biaya" name="name" value="{{ old('name', $item->name) }}">
               @error('name')
                 <span class="text-danger">{{ $message }}</span>
@@ -29,7 +29,7 @@
           <div class="form-group row">
             <label for="description" class="col-sm-3 col-form-label">Deskripsi</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control @error('description') 'is-invalid' @enderror" autofocus id="description"
+              <input type="text" class="form-control @error('description') is-invalid @enderror" autofocus id="description"
                 placeholder="Deskripsi kategori biaya" name="description" value="{{ old('description', $item->description) }}">
               @error('description')
                 <span class="text-danger">{{ $message }}</span>

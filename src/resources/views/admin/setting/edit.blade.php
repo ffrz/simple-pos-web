@@ -12,7 +12,7 @@
             <div class="form-group row">
                 <label for="store_name" class="col-sm-2 col-form-label">Nama Toko</label>
                 <div class="col-sm-10">
-                    <input type="text" autofocus class="form-control @error('store_name') 'is-invalid' @enderror"
+                    <input type="text" autofocus class="form-control @error('store_name') is-invalid @enderror"
                         id="store_name" placeholder="Nama Toko" name="store_name" value="{{ $data['store_name'] }}">
                 </div>
                 @error('store_name')
