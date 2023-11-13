@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\CashTransaction;
+use App\Models\CashTransactionCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +18,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CostCategorySeeder::class,
             CostSeeder::class,
+            CashAccountSeeder::class,
+            CashTransactionCategorySeeder::class,
+            CashTransactionSeeder::class,
         ]);
     }
 }
