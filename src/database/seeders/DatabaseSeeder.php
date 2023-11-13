@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CashAccountSeeder::class,
             CashTransactionCategorySeeder::class,
             CashTransactionSeeder::class,
+            PartySeeder::class,
             ProductCategorySeeder::class,
             ProductSeeder::class,
         ]);

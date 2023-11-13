@@ -8,7 +8,9 @@ use App\Http\Controllers\Admin\CostCategoryController;
 use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserGroupController;
 use Illuminate\Support\Facades\Auth;
@@ -74,37 +76,57 @@ Route::middleware(['auth', 'only_admin'])->prefix('admin')->group(function () {
     Route::controller(CostCategoryController::class)->prefix('cost-categories')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(CostController::class)->prefix('costs')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(CashAccountController::class)->prefix('cash-accounts')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(CashTransactionCategoryController::class)->prefix('cash-transaction-categories')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(CashTransactionController::class)->prefix('cash-transactions')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(ProductCategoryController::class)->prefix('product-categories')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::match(['get'], 'delete/{id}', 'delete');
+        Route::get('delete/{id}', 'delete');
+    });
+
+    Route::controller(ProductController::class)->prefix('products')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::get('delete/{id}', 'delete');
+    });
+
+    Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::get('delete/{id}', 'delete');
+        Route::get('view/{id}', 'view');
+    });
+
+    Route::controller(CustomerController::class)->prefix('customers')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::get('delete/{id}', 'delete');
+        Route::get('view/{id}', 'view');
     });
 
 });
