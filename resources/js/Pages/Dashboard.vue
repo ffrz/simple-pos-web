@@ -2,7 +2,6 @@
 
 import BtnLink from "@/components/BtnLink.vue";
 
-
 </script>
 
 <template>
