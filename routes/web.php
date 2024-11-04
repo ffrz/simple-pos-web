@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserV2Controller;
@@ -37,6 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/delete/{id}', [UserV2Controller::class, 'delete']);
     });
 
+    Route::get('/inventory/product-category', [ProductCategoryController::class, 'index']);
+    Route::get('/inventory/product-category/data', [ProductCategoryController::class, 'data']);
+    Route::resource('/inventory/product-category', ProductCategoryController::class);
 });
 
 require __DIR__ . '/auth.php';

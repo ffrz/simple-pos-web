@@ -49,6 +49,24 @@
               </q-card>
             </q-expansion-item>
           </q-expansion-item>
+          <q-expansion-item expand-separator icon="shelves" label="Inventory" :default-opened="$page.url.startsWith('/inventory')">
+            <q-item class="subnav" clickable v-ripple :active="$page.url == '/inventory/product'" @click="router.get('/inventory/product')">
+              <q-item-section avatar>
+                <q-icon name="pallet" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Product</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item class="subnav" clickable v-ripple :active="$page.url.startsWith('/inventory/product-category')" @click="router.get('/inventory/product-category')">
+              <q-item-section avatar>
+                <q-icon name="category" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Product Category</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
           <q-expansion-item expand-separator icon="people" label="User Manager" :default-opened="$page.url.startsWith('/user')">
             <q-item class="subnav" clickable v-ripple :active="$page.url == '/user'" @click="router.get('/user')">
               <q-item-section avatar>

@@ -24,5 +24,15 @@ class DatabaseSeeder extends Seeder
             'admin' => true,
             'active' => true,
         ]);
+
+        $this->call([
+            // UserGroupSeeder::class,
+            // UserSeeder::class,
+            // PartySeeder::class,
+            // ServiceOrderSeeder::class,
+            ProductCategorySeeder::class,
+            // ProductSeeder::class,
+            // ExpenseCategorySeeder::class,
+        ]);
     }
 }
