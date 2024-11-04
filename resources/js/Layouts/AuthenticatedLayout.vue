@@ -10,9 +10,9 @@
     <q-drawer :breakpoint="768" v-model="leftDrawerOpen" show-if-above>
       <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
         <div class="absolute-bottom bg-transparent">
-          <q-avatar size="56px" class="q-mb-sm">
+          <!-- <q-avatar size="56px" class="q-mb-sm">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
+          </q-avatar> -->
           <div class="text-weight-bold">{{ page.props.auth.user.name }}</div>
           <div><my-link class="text-white" href="/profile" :label="page.props.auth.user.email" /></div>
         </div>

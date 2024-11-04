@@ -1,23 +1,22 @@
 import "@/bootstrap";
 
-import { createApp, h, watch } from "vue";
-import { createInertiaApp, Head, Link, usePage } from "@inertiajs/vue3";
+import { createApp, h } from "vue";
+import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import { Dialog, Loading, Notify, Quasar } from "quasar";
-import AuthenticatedLayout from "./Layouts/AuthenticatedLayout.vue";
-import GuestLayout from "./Layouts/GuestLayout.vue";
+import AuthenticatedLayout from "./layouts/AuthenticatedLayout.vue";
+import GuestLayout from "./layouts/GuestLayout.vue";
 import "@quasar/extras/material-icons/material-icons.css";
 import "quasar/src/css/index.sass";
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { router } from "@inertiajs/vue3";
 import processFlashMessage from "@/helpers/flash-message";
-import MyLink from "@/Components/MyLink.vue";
+import MyLink from "@/components/MyLink.vue";
 
 createInertiaApp({
   title: (title) => window.CONFIG.APP_NAME + (title ? " - " + title : ""),
   resolve: (name) => {
-    const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
-
-    return pages[`./Pages/${name}.vue`];
+    const pages = import.meta.glob("./pages/**/*.vue", { eager: true });
+    return pages[`./pages/${name}.vue`];
   },
   setup({ el, App, props, plugin }) {
 
