@@ -1,0 +1,45 @@
+<template>
+  <q-layout view="hHh lpR fff" style="background:#f5f5f5">
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar style="max-width: 980px; margin:0 auto;">
+        <q-toolbar-title align="left">
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          <my-link class="q-pl-md text-white" :href="route('home')" :label="$config.APP_NAME" />
+        </q-toolbar-title>
+        <div class="q-gutter-md q-ma-none">
+          <my-link label="Login" :href="route('login')" />
+          <my-link label="Register" :href="route('register')" />
+        </div>
+      </q-toolbar>
+    </q-header>
+    <q-page-container style="max-width: 1024px; margin:0 auto;">
+      <slot></slot>
+    </q-page-container>
+    <q-footer class="transparent">
+      <div class="q-mt-lg q-mb-xl justify-center items-center flex text-grey-6">
+        <span>&copy; 2024 - {{ $config.APP_NAME }} v{{ $config.APP_VERSION_STR }}</span>
+      </div>
+    </q-footer>
+  </q-layout>
+</template>
+
+<script setup>
+import { defineComponent } from "vue";
+
+defineComponent({
+  name: 'AuthLayout'
+})
+
+
+</script>
+<style scoped>
+.q-toolbar a {
+  color: #ddd;
+}
+
+.q-toolbar a:hover {
+  color: #fff;
+}
+</style>
