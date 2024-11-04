@@ -14,7 +14,7 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-page-container style="max-width: 1024px; margin:0 auto;">
+    <q-page-container style="max-width: 1024px; margin:20px auto;">
       <slot></slot>
     </q-page-container>
     <q-footer class="transparent">

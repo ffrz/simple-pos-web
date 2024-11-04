@@ -8,17 +8,17 @@
     "src": "node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CtrtCMdx.css",
+    "file": "assets/app-BQIS2C1y.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-B-BjuM_F.js",
+    "file": "assets/app-CBR9dTdF.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-CCTQGeGi.css"
+      "assets/app-CypTDu_M.css"
     ],
     "assets": [
       "assets/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ-D-x-0Q06.woff2",
