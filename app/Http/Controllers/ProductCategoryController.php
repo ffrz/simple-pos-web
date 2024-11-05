@@ -36,9 +36,9 @@ class ProductCategoryController extends Controller
             $q->orWhere('description', 'like', '%' . $search . '%');
         }
 
-        $users = $q->paginate($request->get('per_page', 10))->withQueryString();
+        $items = $q->paginate($request->get('per_page', 10))->withQueryString();
 
-        return response()->json($users);
+        return response()->json($items);
     }
 
     public function store(Request $request)

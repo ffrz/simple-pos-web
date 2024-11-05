@@ -117,52 +117,6 @@ const fetchUsers = (props = null) => {
     });
 };
 
-function wrapCsvValue(val, formatFn, row) {
-  let formatted = formatFn !== void 0 ? formatFn(val, row) : val;
-
-  formatted =
-    formatted === void 0 || formatted === null ? "" : String(formatted);
-
-  formatted = formatted.split('"').join('""');
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-
-  return `"${formatted}"`;
-}
-
-const exportToCsv = () => {
-  const content = [columns.map((col) => wrapCsvValue(col.label))]
-    .concat(
-      rows.value.map((row) =>
-        columns
-          .map((col) =>
-            wrapCsvValue(
-              typeof col.field === "function"
-                ? col.field(row)
-                : row[col.field === void 0 ? col.name : col.field],
-              col.format,
-              row
-            )
-          )
-          .join(",")
-      )
-    )
-    .join("\r\n");
-
-  const status = exportFile("table-export.csv", content, "text/csv");
-
-  if (status !== true) {
-    $q.notify({
-      message: "Browser denied file download...",
-      color: "negative",
-      icon: "warning",
-    });
-  }
-};
 </script>
 
 <template>
@@ -178,9 +132,7 @@ const exportToCsv = () => {
 
           <template v-slot:top-left>
             <div class="q-gutter-sm">
-              <q-btn color="primary" icon="add" @click="router.get('user-v2/add')" label="Add User"
-                class="desktop-only" />
-              <!--<q-btn no-caps color="grey-8" icon="archive" @click="exportToCsv" />-->
+              <q-btn color="primary" icon="add" @click="router.get('user-v2/add')" label="Add" />
             </div>
           </template>
 

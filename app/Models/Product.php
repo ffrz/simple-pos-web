@@ -56,8 +56,8 @@ class Product extends BaseModel
         return $this->belongsTo(ProductCategory::class);
     }
 
-    // public function supplier(): BelongsTo
-    // {
-    //     return $this->belongsTo(Supplier::class);
-    // }
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }

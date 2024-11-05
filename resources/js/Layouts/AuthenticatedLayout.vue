@@ -3,22 +3,28 @@
     <q-header>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title class="absolute-center">{{ $config.APP_NAME }}</q-toolbar-title>
+        <q-toolbar-title class="absolute-center">MY STORE</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer :breakpoint="768" v-model="leftDrawerOpen" show-if-above>
-      <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+      <!-- <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
         <div class="absolute-bottom bg-transparent">
-          <!-- <q-avatar size="56px" class="q-mb-sm">
+          <q-avatar size="56px" class="q-mb-sm">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar> -->
+          </q-avatar>
           <div class="text-weight-bold">{{ page.props.auth.user.name }}</div>
           <div><my-link class="text-white" href="/profile" :label="page.props.auth.user.email" /></div>
         </div>
-      </q-img>
-      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+      </q-img> -->
+      <q-scroll-area style="height: calc(100%);border-right: 1px solid #ddd">
         <q-list id="main-nav" style="margin-bottom: 50px;">
+          <q-item clickable v-ripple class="q-pa-none bg-primary">
+            <i-link class="brand-link text-white" href="/">
+              <q-icon name="store" size="1.5rem" />
+              <span class="q-ml-sm">{{ $config.APP_NAME }}</span>
+            </i-link>
+          </q-item>
           <q-item clickable v-ripple :active="$page.url == '/dashboard'" @click="router.get(route('dashboard'))">
             <q-item-section avatar>
               <q-icon name="dashboard" />
@@ -49,8 +55,10 @@
               </q-card>
             </q-expansion-item>
           </q-expansion-item>
-          <q-expansion-item expand-separator icon="shelves" label="Inventory" :default-opened="$page.url.startsWith('/inventory')">
-            <q-item class="subnav" clickable v-ripple :active="$page.url == '/inventory/product'" @click="router.get('/inventory/product')">
+          <q-expansion-item expand-separator icon="shelves" label="Inventory"
+            :default-opened="$page.url.startsWith('/inventory')">
+            <q-item class="subnav" clickable v-ripple :active="$page.url == '/inventory/product'"
+              @click="router.get('/inventory/product')">
               <q-item-section avatar>
                 <q-icon name="pallet" />
               </q-item-section>
@@ -58,7 +66,8 @@
                 <q-item-label>Product</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item class="subnav" clickable v-ripple :active="$page.url.startsWith('/inventory/product-category')" @click="router.get('/inventory/product-category')">
+            <q-item class="subnav" clickable v-ripple :active="$page.url.startsWith('/inventory/product-category')"
+              @click="router.get('/inventory/product-category')">
               <q-item-section avatar>
                 <q-icon name="category" />
               </q-item-section>
@@ -67,21 +76,15 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
-          <q-expansion-item expand-separator icon="people" label="User Manager" :default-opened="$page.url.startsWith('/user')">
-            <q-item class="subnav" clickable v-ripple :active="$page.url == '/user'" @click="router.get('/user')">
+          <q-expansion-item expand-separator icon="settings" label="Settings"
+            :default-opened="$page.url.startsWith('/user')">
+            <q-item class="subnav" clickable v-ripple :active="$page.url.startsWith('/user-v2')"
+              @click="router.get('/user-v2')">
               <q-item-section avatar>
                 <q-icon name="people" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Version 1 (Dialog)</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item class="subnav" clickable v-ripple :active="$page.url.startsWith('/user-v2')" @click="router.get('/user-v2')">
-              <q-item-section avatar>
-                <q-icon name="people" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Version 2 (Page)</q-item-label>
+                <q-item-label>Users</q-item-label>
               </q-item-section>
             </q-item>
           </q-expansion-item>
@@ -101,7 +104,8 @@
               <q-item-label>Logout</q-item-label>
             </q-item-section>
           </q-item>
-          <div class="absolute-bottom text-grey-6 q-pa-md">&copy; 2024 - {{ $config.APP_NAME + ' v' + $config.APP_VERSION_STR }}</div>
+          <div class="absolute-bottom text-grey-6 q-pa-md">&copy; 2024 - {{ $config.APP_NAME + ' v' +
+            $config.APP_VERSION_STR }}</div>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -112,7 +116,7 @@
 
     <!-- Footer hanya tampil jika di tampilan screen kecil, lihat di bagian style di bawah pada file ini -->
     <!-- <q-footer> -->
-      <!-- <q-tabs v-model="tab" indicator-color="yellow" class="bg-primary text-white shadow-2">
+    <!-- <q-tabs v-model="tab" indicator-color="yellow" class="bg-primary text-white shadow-2">
         <q-tab name="mails" icon="mail" label="Mails" />
         <q-tab name="alarms" icon="alarm" label="Alarms" />
         <q-tab name="movies" icon="movie" label="Movies" />
@@ -150,10 +154,22 @@ function toggleLeftDrawer() {
 
 </script>
 
-<!-- <style scoped>
-@media screen and (min-width: 768px) {
+<style scoped>
+/* @media screen and (min-width: 768px) {
   .q-footer {
     display: none;
   }
+} */
+.brand-link {
+  height: 50px;
+  display: block;
+  line-height: 1.25em;
+  padding: .8125rem .5rem;
+  font-size: 1.25rem;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none;
 }
-</style> -->
+
+</style>

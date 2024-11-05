@@ -11,7 +11,7 @@ class UserV2Controller extends Controller
 {
     public function index(Request $request)
     {
-        return inertia('UserV2/Index');
+        return inertia('user/Index');
     }
 
     public function data(Request $request)
@@ -40,10 +40,10 @@ class UserV2Controller extends Controller
             $user->active = true;
             $user->admin = true;
         } else if ($user == Auth::user()) {
-            return redirect('/user-v2')->with('warning', 'Can not edit current user.');
+            return redirect('/user')->with('warning', 'Can not edit current user.');
         }
 
-        return inertia('UserV2/Editor', [
+        return inertia('user/Editor', [
             'data' => $user,
         ]);
     }

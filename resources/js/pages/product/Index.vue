@@ -1,9 +1,8 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import axios from "axios";
-import { exportFile, useQuasar } from "quasar";
-import { usePage } from "@inertiajs/vue3";
-import { useApiForm } from "@/helpers/useApiForm";
+import { useQuasar } from "quasar";
+import { router, usePage } from "@inertiajs/vue3";
 
 const page = usePage();
 const currentUser = page.props.auth.user;
@@ -12,9 +11,6 @@ const tableRef = ref(null);
 const rows = ref([]);
 const loading = ref(true);
 const filter = ref("");
-const showEditor = ref();
-const editorMode = ref("add");
-let currentRow = null;
 const pagination = ref({
   page: 1,
   rowsPerPage: 10,
@@ -25,9 +21,9 @@ const pagination = ref({
 
 const columns = [
   {
-    name: "name",
-    label: "Name",
-    field: "name",
+    name: "code",
+    label: "Code",
+    field: "code",
     align: "left",
     sortable: true
   },
@@ -39,82 +35,51 @@ const columns = [
     sortable: true,
   },
   {
-    name: "action",
-    label: "Action",
-    align: "center"
+    name: "stock",
+    label: "QoH",
+    field: "stock",
+    align: "right",
+    sortable: true,
   },
+  {
+    name: "cost",
+    label: "Cost",
+    field: "cost",
+    align: "right",
+    sortable: true,
+  },
+  {
+    name: "price",
+    label: "Price",
+    field: "price",
+    align: "right",
+    sortable: true,
+  },
+  { name: "action", label: "Action", align: "center" },
 ];
 
-let form = useApiForm({
-  id: 0,
-  name: "",
-  description: "",
-});
-
 onMounted(() => {
-  filter.value = localStorage.getItem("simple-pos.product-category-list-page.filter");
+  filter.value = localStorage.getItem("simple-pos.product-list-page.filter");
   fetchItems();
 });
 
 watch(filter, (newValue) => {
   if (!newValue && newValue != "") newValue = "";
-  localStorage.setItem("simple-pos.product-category-list-page.filter", newValue);
+  localStorage.setItem("simple-pos.product-list-page.filter", newValue);
 });
-
-const addItem = () => {
-  form.id = null;
-  form.reset();
-  form.clearErrors();
-  editorMode.value = "add";
-  showEditor.value = true;
-};
-
-const editItem = (row) => {
-  currentRow = row;
-  form.clearErrors();
-  editorMode.value = "edit";
-  showEditor.value = true;
-  form.id = row.id;
-  form.name = row.name;
-  form.description = row.description;
-};
-
-const submitForm = () => {
-  form.clearErrors();
-  form.submit(
-    editorMode.value == "add" ? "post" : "put",
-    "/inventory/product-category" + (editorMode.value == "add" ? "" : "/" + form.id),
-    {
-      preserveScroll: true,
-      onSuccess: (response) => {
-        showEditor.value = false;
-        form.reset();
-        $q.notify({
-          message: response.message,
-          icon: "info",
-          color: "green",
-          actions: [
-            { icon: "close", color: "white", round: true, dense: true },
-          ],
-        });
-        fetchItems();
-      },
-    }
-  );
-};
 
 const deleteItem = (row) => {
   $q.dialog({
     title: "Confirm",
     icon: "question",
-    message: "Are you sure you want to delete " + row.name + "?",
+    message: "Are you sure you want to delete " + row.code + "?",
     focus: "cancel",
     cancel: true,
     persistent: true,
   }).onOk(() => {
     loading.value = true;
     axios
-      .delete("/inventory/product-category/" + row.id)
+      .post("/inventory/product/delete/" + row.id)
       .then((response) => {
         $q.notify(response.data.message);
         fetchItems();
@@ -156,7 +121,7 @@ const fetchItems = (props = null) => {
   loading.value = true;
 
   axios
-    .get("/inventory/product-category/data", { params: params })
+    .get("/inventory/product/data", { params: params })
     .then((response) => {
       rows.value = response.data.data;
       pagination.value.page = response.data.current_page;
@@ -174,12 +139,11 @@ const fetchItems = (props = null) => {
 
 </script>
 
-
 <template>
   <authenticated-layout>
     <q-page>
       <div class="q-pa-md">
-        <q-table class="alt-row" ref="tableRef" flat bordered square :dense="true || $q.screen.lt.md" color="primary" row-key="id"
+        <q-table ref="tableRef" flat bordered square :dense="true || $q.screen.lt.md" color="primary" row-key="id"
           virtual-scroll title="Users" v-model:pagination="pagination" :filter="filter" :loading="loading"
           :columns="columns" :rows="rows" :rows-per-page-options="[10, 25, 50]" @request="fetchItems" binary-state-sort>
           <template v-slot:loading>
@@ -188,7 +152,7 @@ const fetchItems = (props = null) => {
 
           <template v-slot:top-left>
             <div class="q-gutter-sm">
-              <q-btn color="primary" icon="add" @click="addItem" label="Add" />
+              <q-btn color="primary" icon="add" @click="router.get('/inventory/product/add')" label="Add" />
             </div>
           </template>
 
@@ -210,51 +174,35 @@ const fetchItems = (props = null) => {
             </div>
           </template>
           <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td key="name" :props="props">
-                {{ props.row.name }}
+            <q-tr :props="props" :class="(!props.row.active) ? 'bg-red-1' : ''">
+              <q-td key="code" :props="props">
+                {{ props.row.code }}
               </q-td>
               <q-td key="description" :props="props">
                 {{ props.row.description }}
               </q-td>
+              <q-td key="stock" :props="props" align="right">
+                {{ props.row.stock }}
+              </q-td>
+              <q-td key="cost" :props="props" align="right">
+                {{ props.row.cost }}
+              </q-td>
+              <q-td key="price" :props="props" align="right">
+                {{ props.row.price }}
+              </q-td>
               <q-td key="action" class="q-gutter-x-sm" :props="props" align="center">
-                <q-btn rounded dense color="grey" icon="edit" @click="editItem(props.row)">
-                  <q-tooltip>Edit Item</q-tooltip>
+                <q-btn rounded dense color="grey" icon="edit"
+                  @click="router.get('/inventory/product/edit/' + props.row.id)">
+                  <q-tooltip>Edit</q-tooltip>
                 </q-btn>
                 <q-btn rounded dense color="red" icon="delete" @click="deleteItem(props.row)">
-                  <q-tooltip>Delete Item</q-tooltip>
+                  <q-tooltip>Delete</q-tooltip>
                 </q-btn>
               </q-td>
             </q-tr>
           </template>
         </q-table>
       </div>
-
-      <q-dialog v-model="showEditor" persistent>
-        <q-card square style="min-width: 350px" class="q-pa-md">
-          <q-form class="q-gutter-md" @submit.prevent="submitForm">
-            <q-card-section>
-              <div class="text-h6">
-                <template v-if="editorMode == 'add'"> Add Category </template>
-                <template v-else> Edit Category </template>
-              </div>
-            </q-card-section>
-            <q-card-section class="q-pt-none">
-              <input type="hidden" name="id" v-model="form.id" />
-              <q-input autofocus v-model.trim="form.name" label="Name" lazy-rules :error="!!form.errors.name"
-                :disable="form.processing" :error-message="form.errors.name" :rules="[
-                  (val) => (val && val.length > 0) || 'Please enter category name.',
-                ]" />
-              <q-input v-model.trim="form.description" label="Description" lazy-rules :disable="form.processing"
-                :error="!!form.errors.description" :error-message="form.errors.description" />
-            </q-card-section>
-            <q-card-actions align="right">
-              <q-btn type="submit" label="Save" color="primary" icon="check" :disable="form.processing" />
-              <q-btn label="Cancel" v-close-popup color="grey-7" icon="close" :disable="form.processing" />
-            </q-card-actions>
-          </q-form>
-        </q-card>
-      </q-dialog>
     </q-page>
   </authenticated-layout>
 </template>

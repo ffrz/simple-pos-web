@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserV2Controller;
@@ -39,6 +40,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/inventory/product-category', [ProductCategoryController::class, 'index']);
     Route::get('/inventory/product-category/data', [ProductCategoryController::class, 'data']);
     Route::resource('/inventory/product-category', ProductCategoryController::class);
+
+    Route::prefix('/inventory/product')->group(function() {
+        Route::get('', [ProductController::class, 'index']);
+        Route::get('/data', [ProductController::class, 'data']);
+        Route::get('/add', [ProductController::class, 'editor']);
+        Route::get('/edit/{id}', [ProductController::class, 'editor']);
+        Route::post('/save', [ProductController::class, 'save']);
+        Route::post('/delete/{id}', [ProductController::class, 'delete']);
+    });
 });
 
 require __DIR__ . '/auth.php';
