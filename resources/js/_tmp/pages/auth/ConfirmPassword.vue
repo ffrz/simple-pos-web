@@ -33,10 +33,14 @@ const submit = () => {
             <q-card-section>
               <q-input autofocus square v-model.trim="form.password" label="Password" type="password" lazy-rules
                 :disable="form.processing" :error="!!form.errors.password" :error-message="form.errors.password"
-                :rules="[(val) => val && val.length > 0 || 'Password field is required.']" />
+                :rules="[(val) => val && val.length > 0 || 'Password field is required.']">
+                  <template v-slot:append>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
             </q-card-section>
             <q-card-actions>
-              <q-btn type="submit" color="primary" class="full-width" label="Confirm" :disable="form.processing" />
+              <q-btn icon="send" type="submit" color="primary" class="full-width" label="Confirm" :disable="form.processing" />
             </q-card-actions>
           </q-card>
         </q-form>

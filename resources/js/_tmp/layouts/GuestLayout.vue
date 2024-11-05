@@ -1,3 +1,12 @@
+<script setup>
+import { defineComponent } from "vue";
+
+defineComponent({
+  name: 'GuestLayout'
+});
+
+</script>
+
 <template>
   <q-layout view="hHh lpR fff" style="background:#f5f5f5">
     <q-header elevated class="bg-primary text-white">
@@ -25,15 +34,6 @@
   </q-layout>
 </template>
 
-<script setup>
-import { defineComponent } from "vue";
-
-defineComponent({
-  name: 'AuthLayout'
-})
-
-
-</script>
 <style scoped>
 .q-toolbar a {
   color: #ddd;

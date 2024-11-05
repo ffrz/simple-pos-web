@@ -43,20 +43,31 @@ const submit = () => {
               </q-card-section>
               <q-card-section>
                 <q-input square v-model.trim="form.email" label="Email" lazy-rules :error="!!form.errors.email"
-                  :error-message="form.errors.email"
-                  :rules="[(val) => validateEmail(val) || 'Must be a valid email']" />
+                  :error-message="form.errors.email" :rules="[(val) => validateEmail(val) || 'Must be a valid email']">
+                  <template v-slot:append>
+                    <q-icon name="email" />
+                  </template>
+                </q-input>
                 <q-input square v-model="form.password" type="password" label="Password" :error="!!form.errors.password"
                   :error-message="form.errors.password" lazy-rules
-                  :rules="[(val) => (val && val.length > 0) || 'Please enter password']" />
+                  :rules="[(val) => (val && val.length > 0) || 'Please enter password']">
+                  <template v-slot:append>
+                    <q-icon name="password" />
+                  </template>
+                </q-input>
                 <q-input square v-model="form.password_confirmation" type="password" label="Password"
                   :error="!!form.errors.password_confirmation" :error-message="form.errors.password_confirmation"
                   lazy-rules :rules="[
                     (val) => (val && val.length > 0) || 'Please confirm your password.',
                     () => (form.password == form.password_confirmation) || 'Password confirmation did not match.'
-                  ]" />
+                  ]">
+                  <template v-slot:append>
+                    <q-icon name="password" />
+                  </template>
+                </q-input>
               </q-card-section>
               <q-card-actions>
-                <q-btn type="submit" color="primary" class="full-width" label="Reset Password" />
+                <q-btn icon="send" type="submit" color="primary" class="full-width" label="Reset Password" />
               </q-card-actions>
               <q-card-section class="text-center q-pa-none q-mt-md">
                 <p class="q-my-xs text-grey-7">

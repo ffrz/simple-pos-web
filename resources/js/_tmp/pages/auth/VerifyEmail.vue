@@ -45,10 +45,10 @@ const verificationLinkSent = computed(
               </q-card-section>
               <q-card-section>
                 <q-btn class="full-width" color="primary" :class="{ 'opacity-25': form.processing }"
-                  :disabled="form.processing" type="submit" icon="email">
+                  :disabled="form.processing" type="submit" icon="send">
                   <span class="q-ml-sm">Resend Verification Email</span>
                 </q-btn>
-                <q-btn class="q-mt-md full-width" color="grey" icon="logout"
+                <q-btn class="q-mt-md full-width" icon="logout"
                   @click.prevent="router.post(route('logout'))">
                   <span class="q-ml-sm">Log Out</span>
                 </q-btn>

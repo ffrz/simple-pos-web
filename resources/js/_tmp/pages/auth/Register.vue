@@ -33,22 +33,38 @@ const submit = () => {
               <q-card-section>
                 <q-input autofocus square v-model.trim="form.name" label="Name" lazy-rules :error="!!form.errors.name"
                   :error-message="form.errors.name" :disable="form.processing"
-                  :rules="[(val) => (val && val.length > 0) || 'Please enter name']" />
+                  :rules="[(val) => (val && val.length > 0) || 'Please enter name']">
+                  <template v-slot:append>
+                    <q-icon name="person" />
+                  </template>
+                </q-input>
                 <q-input square v-model.trim="form.email" label="Email" lazy-rules :error="!!form.errors.email"
                   :error-message="form.errors.email" :disable="form.processing"
-                  :rules="[(val) => validateEmail(val) || 'Must be a valid email']" />
+                  :rules="[(val) => validateEmail(val) || 'Must be a valid email']">
+                  <template v-slot:append>
+                    <q-icon name="email" />
+                  </template>
+                </q-input>
                 <q-input square v-model="form.password" type="password" label="Password" :error="!!form.errors.password"
                   :error-message="form.errors.password" lazy-rules :disable="form.processing"
-                  :rules="[(val) => (val && val.length > 0) || 'Please enter password']" />
+                  :rules="[(val) => (val && val.length > 0) || 'Please enter password']">
+                  <template v-slot:append>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
                 <q-input square v-model="form.password_confirmation" type="password" label="Confirm Password"
                   :disable="form.processing" :error="!!form.errors.password_confirmation"
                   :error-message="form.errors.password_confirmation" lazy-rules :rules="[
                     (val) => (val && val.length > 0) || 'Please confirm your password.',
                     () => (form.password == form.password_confirmation) || 'Password confirmation did not match.'
-                  ]" />
+                  ]">
+                  <template v-slot:append>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
               </q-card-section>
               <q-card-actions>
-                <q-btn type="submit" color="primary" class="full-width" label="Register" :disable="form.processing" />
+                <q-btn icon="how_to_reg" type="submit" color="primary" class="full-width" label="Register" :disable="form.processing" />
               </q-card-actions>
               <q-card-section class="text-center q-pa-none q-mt-md">
                 <p class="q-my-xs text-grey-7">

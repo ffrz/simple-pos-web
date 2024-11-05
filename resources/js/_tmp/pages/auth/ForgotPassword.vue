@@ -57,10 +57,14 @@ const submit = () => {
             <q-card-section>
               <q-input ref="emailInput" autofocus square v-model.trim="form.email" label="Email" lazy-rules
                 :error="!!form.errors.email" :error-message="form.errors.email" :disable="form.processing"
-                :rules="[(val) => validateEmail(val) || 'Must be a valid email.']" />
+                :rules="[(val) => validateEmail(val) || 'Must be a valid email.']">
+                <template v-slot:append>
+                  <q-icon name="email" />
+                </template>
+              </q-input>
             </q-card-section>
             <q-card-actions>
-              <q-btn type="submit" color="primary" class="full-width" label="Email Password Reset Link"
+              <q-btn icon="email" type="submit" color="primary" class="full-width" label="Email Password Reset Link"
                 :disable="form.processing" />
             </q-card-actions>
             <q-card-section class="text-center q-pa-none q-mt-md">
